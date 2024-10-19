@@ -19,7 +19,7 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
 ```
      
    output:
-    ```ts
+   ```ts
     interface MusixmatchLyrics {
       type : string;
     	action_requested: string;
@@ -73,7 +73,7 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
       note : string
       data : MusixmatchLyrics
     }
-    ```
+   ```
 
 
 
@@ -81,10 +81,11 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
 
   
    input:
-    ```ts
+   ```ts
     {
       artistID : string
-    }```
+    }
+```
 
     
    output:
