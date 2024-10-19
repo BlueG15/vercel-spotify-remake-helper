@@ -13,10 +13,12 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
    ```ts
    {
        isrc : string,
-       type? : "RICHSYNC" | "SUBTILES" | "LYRICS" //auto mode fetches all 3 and return the first in this priority that actuallyy correctly fetched
+       type? : "RICHSYNC" | "SUBTILES" | "LYRICS"
+       //no type or type isnt those 3 mean auto mode
+       //auto mode fetches all 3 and return the first in this priority that actuallyy correctly fetched
    }
 
-```
+   ```
      
    output:
    ```ts
@@ -89,8 +91,11 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
    ```ts
     {
       artistID : string
+      //ID is the part after /artists in the artist profile on spotify
+      //ex : https://open.spotify.com/artist/0K05TDnN7xPwIHDOwD2YYs
+      //artistID = 0K05TDnN7xPwIHDOwD2YYs
     }
-```
+   ```
 
     
    output:
