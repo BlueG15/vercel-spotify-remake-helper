@@ -6,7 +6,7 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
 **Endpoints**: 
 
 
-  **/getLink**: 
+  **/getLyric**: 
 
   
    input: 
