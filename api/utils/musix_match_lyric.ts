@@ -212,15 +212,7 @@ class MusixMatch {
             let a = JSON.parse(subtitle_body);
             return a;
         }catch(err){         
-            return [{
-                text : subtitle_body,
-                time : {
-                    total : -1,
-                    minutes: -1,
-                    seconds : -1,
-                    hundredths : -1
-                }
-            }]
+            return []
         }
     };
     protected processRichsync(richsync_body: string): MusixmatchRichsync[]{
