@@ -1,3 +1,4 @@
+import util from "util"
 import * as axiosOriginal from "axios"
 import { response } from "./response";
 const axios = axiosOriginal.default
@@ -191,7 +192,7 @@ class MusixMatch {
             .catch(err => {
                 let a = CANNOT_FETCH_RESPONSE;
                 a.data.isrc = isrc;
-                a.fixAndAppendData(err.toString());
+                a.fixAndAppendData(util.format(err));
                 rej(a);
             })
         })
@@ -203,7 +204,16 @@ class MusixMatch {
         }));
     };
     protected processSubtitles(subtitle_body: string): MusixmatchSubtitle[]{
-        return JSON.parse(subtitle_body);
+        return [{
+            text : subtitle_body,
+            time : {
+                total : -1,
+                minutes: -1,
+                seconds : -1,
+                hundredths : -1
+            }
+        }]
+        //return JSON.parse(subtitle_body);
     };
     protected processRichsync(richsync_body: string): MusixmatchRichsync[]{
         const body = JSON.parse(richsync_body);
