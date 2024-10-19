@@ -11,14 +11,20 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
   **/getLyric**: 
    
    Utilizes a musixmatch backdoor to get time stamped lyrics of songs using their isrc
+   
    Type explanation:
+     
      RICHSYNC : timestamped to the word level
+     
      SUBTITLES : timestamped to the sentences level
+     
      LYRICS : no timestamped
   
+   
    Input: 
 
-  These can be query params or included in request body
+   
+   These can be query params or included in request body
    
    ```ts
    {
