@@ -1,5 +1,6 @@
 # vercel-spotify-remake-helper
-extra functionalities made possible throigh scrapaping spotify, used for music apps that aim to replace spotify
+Extra functionalities made possible through scraping spotify, used for music apps that aim to replace spotify
+Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
 **API Link**: *https://vercel-spotify-remake-helper.vercel.app/api/*
 
@@ -7,7 +8,11 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
 
 
   **/getLyric**: 
-
+   Utilizes a musixmatch backdoor to get time stamped lyrics of songs using their isrc
+   Type explanation:
+     RICHSYNC : timestamped to the word level
+     SUBTITLES : timestamped to the sentences level
+     LYRICS : no timestamped
   
    input: 
    ```ts
@@ -23,7 +28,7 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
    output:
    ```ts
     interface MusixmatchLyrics {
-      type : string;
+     type : string; //RICHSYNC, SUBTITLES, or LYRICS
     	action_requested: string;
     	backlink_url: string;
     	can_edit: number;
@@ -85,7 +90,9 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
 
 
   **/getThumbnail**: 
-
+   Get artist object from spotify, hich includes their thumbnail
+   Please note that this is different from the official api
+   Imitates an annonimous account for fetching
   
    input:
    ```ts
