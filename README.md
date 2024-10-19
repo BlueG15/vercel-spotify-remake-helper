@@ -12,10 +12,10 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
    input:
    
       ```js
-   {
+      {
         isrc : string,
         type? : "RICHSYNC" | "SUBTILES" | "LYRICS" //auto mode fetches all 3 and return the first in this priority that actuallyy correctly fetches
-   }
+      }
       ```
 
      
