@@ -4,13 +4,19 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
 **API Link**: *https://vercel-spotify-remake-helper.vercel.app/api/*
 
 **Endpoints**: 
+
+
   **/getLink**: 
+
+  
     input:
       ```ts
       {
         isrc : string,
         type? : "RICHSYNC" | "SUBTILES" | "LYRICS" //auto mode fetches all 3 and return the first in this priority that actuallyy correctly fetches
       }```
+
+      
     output:
     ```ts
     interface MusixmatchLyrics {
@@ -68,11 +74,17 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
     }
     ```
 
+
+
   **/getThumbnail**: 
+
+  
     input:
     ```ts
     {
       artistID : string
     }```
+
+    
     output:
     <Its a response but I am too lazy to map out the data type, figure it out yourself pls>
