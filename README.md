@@ -9,15 +9,15 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
   **/getLink**: 
 
   
-    input:
+   input:
       ```ts
       {
         isrc : string,
         type? : "RICHSYNC" | "SUBTILES" | "LYRICS" //auto mode fetches all 3 and return the first in this priority that actuallyy correctly fetches
       }```
 
-      
-    output:
+     
+   output:
     ```ts
     interface MusixmatchLyrics {
       type : string;
@@ -79,12 +79,12 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
   **/getThumbnail**: 
 
   
-    input:
+   input:
     ```ts
     {
       artistID : string
     }```
 
     
-    output:
+   output:
     <Its a response but I am too lazy to map out the data type, figure it out yourself pls>
