@@ -1,5 +1,6 @@
 # vercel-spotify-remake-helper
 Extra functionalities made possible through scraping spotify, used for music apps that aim to replace spotify
+
 Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
 **API Link**: *https://vercel-spotify-remake-helper.vercel.app/api/*
