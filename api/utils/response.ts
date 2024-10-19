@@ -3,8 +3,9 @@ class response<T extends Object>  {
     fail : boolean
     note : string
     data : T
-    constructor(fail : boolean, note : string, data? : T){
-        var time = new Date().toISOString()
+    overrideStatus : number
+    constructor(fail : boolean, note : string, data? : T, status? : number){
+        let time = new Date().toISOString()
         switch(fail) {
         case false : {
                 console.log(note)
@@ -12,6 +13,7 @@ class response<T extends Object>  {
                 this.note = note
                 this.timeStamp = time
                 this.data = data ?? {} as T
+                this.overrideStatus = status ? status : 400;
                 break
             } 
         default : {
@@ -19,6 +21,7 @@ class response<T extends Object>  {
                 this.note = note
                 this.timeStamp = time
                 this.data = data ?? {} as T
+                this.overrideStatus = status ? status : 200;
             }  
         }
     }

@@ -11,12 +11,11 @@ export default async function handler(req: VercelRequest, Vres: VercelResponse) 
   let isrc = getPropertyNameFromReqObject(req, "isrc");
   let type = getPropertyNameFromReqObject(req, "type")
   mm.main(isrc, type).then(res => {
-    if(!res || (res instanceof response && res.fail)){
+    if(!res){
         Vres.status(400).send(new response(true, "fail to fetches song with this isrc", {isrc : isrc}));
     } else {
         if(res instanceof response){
-            let s = (res.fail) ? 400 : 200;
-            Vres.status(s).send(res);
+            Vres.status(res.overrideStatus).send(res);
         } else {
             Vres.status(200).send(new response(false, "successfully fetches lyric", res));
         }
@@ -24,5 +23,5 @@ export default async function handler(req: VercelRequest, Vres: VercelResponse) 
   }).catch(err => {
     Vres.status(400).send(new response(true, "fail to fetches song with this isrc", {isrc : isrc, fullError: util.format(err)}));
   })
-  
+
 }

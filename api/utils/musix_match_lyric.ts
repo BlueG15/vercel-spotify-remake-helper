@@ -3,7 +3,8 @@ import * as axiosOriginal from "axios"
 import { response } from "./response";
 const axios = axiosOriginal.default
 
-const CANNOT_FETCH_RESPONSE = new response(true, "cannot get lyric for song with this isrc", {isrc : ""})
+const CANNOT_FETCH_RESPONSE = new response(true, "cannot get lyric for song with this isrc", {isrc : ""}, 400)
+const COPRIGHTED_RESPONSE = new response(true, "lyrics is copyrighted, musixmatch refused to provide", {}, 403);
 
 interface MusixmatchLyricResponse {
 	message: {
@@ -156,11 +157,10 @@ class MusixMatch {
                 if(result[0] && result[0].status == 'fulfilled') return res(result[0].value);
                 if(result[1] && result[1].status == 'fulfilled') return res(result[1].value);
                 if(result[2] && result[2].status == 'fulfilled') return res(result[2].value);            
+                let a = CANNOT_FETCH_RESPONSE;
+                a.data.isrc = isrc;
+                rej(a);
             })
-
-            let a = CANNOT_FETCH_RESPONSE;
-            a.data.isrc = isrc;
-            rej(a);
         })
     }
 
@@ -204,16 +204,20 @@ class MusixMatch {
         }));
     };
     protected processSubtitles(subtitle_body: string): MusixmatchSubtitle[]{
-        return [{
-            text : subtitle_body,
-            time : {
-                total : -1,
-                minutes: -1,
-                seconds : -1,
-                hundredths : -1
-            }
-        }]
-        //return JSON.parse(subtitle_body);
+        try{
+            let a = JSON.parse(subtitle_body);
+            return a;
+        }catch(err){         
+            return [{
+                text : subtitle_body,
+                time : {
+                    total : -1,
+                    minutes: -1,
+                    seconds : -1,
+                    hundredths : -1
+                }
+            }]
+        }
     };
     protected processRichsync(richsync_body: string): MusixmatchRichsync[]{
         const body = JSON.parse(richsync_body);
@@ -228,14 +232,25 @@ class MusixMatch {
         }));
     };
 
-    main(isrc: string, type? : string){
+    async main(isrc: string, type? : string){
+
+        let res : MusixmatchLyrics
+
         if(type == "RICHSYNC"){
-            return this.getRichsyncLyrics(isrc);
+            res = await this.getRichsyncLyrics(isrc);
         } else if(type == "SUBTITLES"){
-            return this.getSubtitleLyrics(isrc);
+            res = await this.getSubtitleLyrics(isrc);
         } else if(type == "LYRICS") {
-            return this.getLyrics(isrc);
-        } else return this.requestLyricsAuto(isrc);
+            res = await this.getLyrics(isrc);
+        } else res = await this.requestLyricsAuto(isrc);
+
+        if(res.restricted) {
+            let x = COPRIGHTED_RESPONSE;
+            x.data = res;
+            return x;
+        }
+
+        return res;
     }
 }
 
