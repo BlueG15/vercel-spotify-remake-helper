@@ -9,6 +9,7 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
 
   **/getLyric**: 
+   
    Utilizes a musixmatch backdoor to get time stamped lyrics of songs using their isrc
    Type explanation:
      RICHSYNC : timestamped to the word level
@@ -91,6 +92,7 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
 
   **/getThumbnail**: 
+  
    Get artist object from spotify, hich includes their thumbnail
    Please note that this is different from the official api
    Imitates an annonimous account for fetching
