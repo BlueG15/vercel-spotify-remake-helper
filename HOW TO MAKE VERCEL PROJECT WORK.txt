@@ -1,8 +1,8 @@
 //TO MAKE A VERCEL PROJECT WORK
 
 //0. must have api folder with index.ts in it
-//1.add type : module to package.json
+//1.add type : commonjs to package.json
 //2.vercel.json
-//3.module = esXXXX in tsconfig
+//3.module = commonjs in tsconfig
 //4.put tsconfig in api folder
 //5. EVERYTHING, including extra libs must be in api folder
