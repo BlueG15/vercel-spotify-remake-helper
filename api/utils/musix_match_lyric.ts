@@ -18,6 +18,7 @@ interface MusixmatchLyricResponse {
 }
 
 interface MusixmatchLyrics {
+    type : string;
 	action_requested: string;
 	backlink_url: string;
 	can_edit: number;
@@ -104,6 +105,7 @@ class MusixMatch {
             this.requestLyrics(isrc, MusixmatchLyricTypes.LYRICS).then((req) => {
               const lyric = req.message.body.lyrics;
               lyric.lyrics_body = this.processLyrics(lyric.lyrics_body.toString());
+              lyric.type = "LYRICS";
               res(lyric);
             }).catch((e) => {
               rej(e);
@@ -116,6 +118,7 @@ class MusixMatch {
             this.requestLyrics(isrc, MusixmatchLyricTypes.SUBTITLES).then((req) => {
               const lyric = req.message.body.subtitle_list[0].subtitle;
               lyric.subtitle_body = this.processSubtitles(lyric.subtitle_body.toString());
+              lyric.type = "SUBTITLES";
               res(lyric);
             }).catch((e) => {
               rej(e);
@@ -128,6 +131,7 @@ class MusixMatch {
             this.requestLyrics(isrc, MusixmatchLyricTypes.RICHSYNC).then((req) => {
               const lyric = req.message.body.richsync;
               lyric.richsync_body = this.processRichsync(lyric.richsync_body.toString());
+              lyric.type = "RICHSYNC";
               res(lyric);
             }).catch((e) => {
               rej(e);
@@ -234,7 +238,7 @@ class MusixMatch {
 
     async main(isrc: string, type? : string){
 
-        let res : MusixmatchLyrics
+        let res : MusixmatchLyrics;
 
         if(type == "RICHSYNC"){
             res = await this.getRichsyncLyrics(isrc);

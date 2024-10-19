@@ -1,10 +1,10 @@
 class response<T extends Object>  {
     timeStamp: string
+    status : number
     fail : boolean
     note : string
     data : T
-    overrideStatus : number
-    constructor(fail : boolean, note : string, data? : T, status? : number){
+    constructor(fail : boolean, note : string, data? : T, _status? : number){
         let time = new Date().toISOString()
         switch(fail) {
         case false : {
@@ -13,7 +13,7 @@ class response<T extends Object>  {
                 this.note = note
                 this.timeStamp = time
                 this.data = data ?? {} as T
-                this.overrideStatus = status ? status : 400;
+                this.status = _status ? _status : 200;
                 break
             } 
         default : {
@@ -21,7 +21,7 @@ class response<T extends Object>  {
                 this.note = note
                 this.timeStamp = time
                 this.data = data ?? {} as T
-                this.overrideStatus = status ? status : 200;
+                this.status = _status ? _status : 400;
             }  
         }
     }

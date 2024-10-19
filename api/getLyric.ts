@@ -15,7 +15,7 @@ export default async function handler(req: VercelRequest, Vres: VercelResponse) 
         Vres.status(400).send(new response(true, "fail to fetches song with this isrc", {isrc : isrc}));
     } else {
         if(res instanceof response){
-            Vres.status(res.overrideStatus).send(res);
+            Vres.status(res.status).send(res);
         } else {
             Vres.status(200).send(new response(false, "successfully fetches lyric", res));
         }
