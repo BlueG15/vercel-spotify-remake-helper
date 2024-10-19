@@ -16,7 +16,10 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
      SUBTITLES : timestamped to the sentences level
      LYRICS : no timestamped
   
-   input: 
+   Input: 
+
+  These can be query params or included in request body
+   
    ```ts
    {
        isrc : string,
@@ -27,7 +30,7 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
    ```
      
-   output:
+   Output:
    ```ts
     interface MusixmatchLyrics {
      type : string; //RICHSYNC, SUBTITLES, or LYRICS
@@ -97,7 +100,7 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
    Please note that this is different from the official api
    Imitates an annonimous account for fetching
   
-   input:
+   Input:
    ```ts
     {
       artistID : string
@@ -108,5 +111,5 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
    ```
 
     
-   output:
+   Output:
     <Its a response but I am too lazy to map out the data type, figure it out yourself pls>
