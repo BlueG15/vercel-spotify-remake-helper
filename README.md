@@ -9,7 +9,8 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
   **/getLink**: 
 
   
-    input:
+   input:
+   
       ```ts
       {
         isrc : string,
