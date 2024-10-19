@@ -44,9 +44,11 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
     	updated_time: string;
     	verified: number;
     }
+
     interface MusixmatchLyric {
     	text: string;
     }
+
     interface MusixmatchSubtitle {
     	text: string;
     	time: {
@@ -56,16 +58,19 @@ extra functionalities made possible throigh scrapaping spotify, used for music a
     		hundredths: number;
     	};
     }
+
     interface MusixmatchRichsync {
     	start: number;
     	end: number;
     	body: MusixmatchRichsyncBody[];
     	text: string;
     }
+
     interface MusixmatchRichsyncBody {
     	text: string;
     	offset: number;
     }
+
     interface response {
       timeStamp: string
       status : number
