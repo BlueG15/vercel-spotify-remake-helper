@@ -96,7 +96,7 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
   **/getThumbnail**: 
   
-   Get artist object from spotify, hich includes their thumbnail
+   Get artist object from spotify, which includes their thumbnail
    Please note that this is different from the official api
    Imitates an annonimous account for fetching
   
