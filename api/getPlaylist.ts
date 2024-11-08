@@ -1,9 +1,41 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import util from "util"
 import { response } from './utils/response';
-import getPropertyNameFromReqObject from './utils/getPropertyFromReq';
 import getAccessToken from './utils/get_spotify_access_token';
-import getPlaylist from "./utils/get_playlist";
+import * as axiosOriginal from "axios"
+const axios = axiosOriginal.default
+
+const getPlaylist = (token : string, playlistID : string, offset: number, limit: number) => new Promise((resolve, reject) => {
+    const options = {
+    method: 'GET',
+    url: 'https://api-partner.spotify.com/pathfinder/v1/query',
+    params: {
+        operationName: 'fetchPlaylist',
+        variables: `{"uri":"spotify:playlist:${playlistID}","offset":${offset},"limit":${limit}}`,
+        extensions: process.env.extensionStr3
+    },
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+    };
+
+    axios.request(options).then(function (response : any) {
+        resolve(response.data);
+    }).catch(function (error : any) {
+        resolve(undefined);
+    });
+}) as Promise<Object> | Promise<undefined>
+
+function getPropertyNameFromReqObject(req : VercelRequest, propertyName : string, defaultValue? : any){
+    let res : any = defaultValue
+    if (req.body && req.body[propertyName]) {
+        res = req.body[propertyName];
+    } else if (req.query[propertyName]) {
+        res = req.query[propertyName];
+    } else if (req.cookies[propertyName]) {
+        res = req.cookies[propertyName];
+    }
+    return res
+}
 
 //max 9 seconds
 export default async function handler(req: VercelRequest, Vres: VercelResponse) {

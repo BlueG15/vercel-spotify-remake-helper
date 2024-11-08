@@ -2,7 +2,18 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import util from "util"
 import { response } from './utils/response';
 import { MusixMatch } from './utils/musix_match_lyric';
-import getPropertyNameFromReqObject from './utils/getPropertyFromReq';
+
+function getPropertyNameFromReqObject(req : VercelRequest, propertyName : string, defaultValue? : any){
+  let res : any = defaultValue
+  if (req.body && req.body[propertyName]) {
+      res = req.body[propertyName];
+  } else if (req.query[propertyName]) {
+      res = req.query[propertyName];
+  } else if (req.cookies[propertyName]) {
+      res = req.cookies[propertyName];
+  }
+  return res
+}
 
 //max 9 seconds
 export default async function handler(req: VercelRequest, Vres: VercelResponse) {
