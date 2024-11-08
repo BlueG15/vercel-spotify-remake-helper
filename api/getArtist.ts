@@ -48,9 +48,9 @@ export default async function handler(req: VercelRequest, Vres: VercelResponse) 
     }
     let data = await getArtist(bearerData.accessToken, artistID);
     if(!data || data.errors){
-        Vres.status(400).send(new response(true, "fail to fetches artist thumbnail with this ID", {artistID : artistID}))
+        Vres.status(400).send(new response(true, "fail to fetches artist data with this ID", {artistID : artistID}))
     }
-    Vres.status(200).send(new response(false, "successfully fetches artist thumbnail data", data));
+    Vres.status(200).send(new response(false, "successfully fetches artist data", data));
 }
 
 class response<T extends Object>  {

@@ -50,9 +50,9 @@ export default async function handler(req: VercelRequest, Vres: VercelResponse) 
     }
     let data = await getPlaylist(bearerData.accessToken, playlistID, offset, limit);
     if(!data || data.errors){
-        Vres.status(400).send(new response(true, "fail to fetches artist thumbnail with this ID", {artistID : artistID}))
+        Vres.status(400).send(new response(true, "fail to fetches playlist data with this ID", {playlistID : playlistID}))
     }
-    Vres.status(200).send(new response(false, "successfully fetches artist thumbnail data", data));
+    Vres.status(200).send(new response(false, "successfully fetches playlist data", data));
 }
 
 class response<T extends Object>  {

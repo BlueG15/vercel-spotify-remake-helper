@@ -48,9 +48,9 @@ export default async function handler(req: VercelRequest, Vres: VercelResponse) 
     }
     let data = await getTrack(bearerData.accessToken, trackID);
     if(!data || data.errors){
-        Vres.status(400).send(new response(true, "fail to fetches artist thumbnail with this ID", {artistID : artistID}))
+        Vres.status(400).send(new response(true, "fail to fetches track data with this ID", {trackID : trackID}))
     }
-    Vres.status(200).send(new response(false, "successfully fetches artist thumbnail data", data));
+    Vres.status(200).send(new response(false, "successfully fetches track data", data));
 }
 
 class response<T extends Object>  {
