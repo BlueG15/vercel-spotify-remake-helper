@@ -100,9 +100,9 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
 
 
 
-  **/getThumbnail**: 
+  **/getArtist**: 
   
-   Get artist object from spotify, which includes their thumbnail
+   Get artist object from spotify
    Please note that this is different from the official api
    Imitates an annonimous account for fetching
   
@@ -113,6 +113,42 @@ Programed on ts, hosted on Vercel by Blu, 20/Oct/2024
       //ID is the part after /artists in the artist profile on spotify
       //ex : https://open.spotify.com/artist/0K05TDnN7xPwIHDOwD2YYs
       //artistID = 0K05TDnN7xPwIHDOwD2YYs
+    }
+   ```
+
+    
+   Output:
+    <Its a response but I am too lazy to map out the data type, figure it out yourself pls>
+
+   **/getTrack**: 
+  
+   Get track object from spotify
+   Please note that this is different from the official api
+   Imitates an annonimous account for fetching
+  
+   Input:
+   ```ts
+    {
+      trackID : string
+    }
+   ```
+
+    
+   Output:
+    <Its a response but I am too lazy to map out the data type, figure it out yourself pls>
+
+   **/getPlaylist**: 
+  
+   Get playlist object from spotify
+   Please note that this is different from the official api
+   Imitates an annonimous account for fetching
+  
+   Input:
+   ```ts
+    {
+      playlistID : string,
+      offset : number, //optional, default = 0
+      limit : number  //optional, default = 15
     }
    ```
 
