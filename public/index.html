@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+    rel="stylesheet">
+  <link href="./style.css" rel="stylesheet">
+
+</head>
+
+<script>
+  const element_id = ["get_empty","get_home"];
+
+  function show(id) {
+    const target = document.getElementById(id);
+    if (!target) {
+      show("get_empty");
+      return;
+    }
+    target.className = "mc shown";
+  }
+
+  function hide(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.className = "mc";
+  }
+
+  function hideAll() {
+    element_id.forEach(hide);
+  }
+
+  function loadHashPage() {
+    hideAll();
+
+    const current = window.location.hash.slice(1).trim();
+    show(current || "get_home");
+    console.log(current);
+  }
+
+  function load() {
+    window.onhashchange = loadHashPage;
+    hideAll();
+
+
+    setTimeout(loadHashPage, 500);
+    // show("get_home");
+  }
+</script>
+
+<body id="root" onload="load()">
+  <div class="mc" id="get_empty">
+  <h1>404 NOT FOUND</h1>
+  <div class="frame">
+    <p center>
+      I'm sorry, but it seems like this page does not exist or is still in development.
+      If it's an available endpoint then it will be here very soon
+    </p>
+
+  </div>
+  <div style="height: 16px;"></div>
+
+  <div class="flex aictr coll">
+    <h3 style="text-align: center;">Thank you for your patience</h3>
+    <div style="height: 50px;"></div>
+    <button onclick="window.location.hash='#'">Return</button>
+  </div>
+</div>
+<div class="mc" id="get_home">
+  <h1>Hello, welcome to the api I made~</h1>
+  <h3 class="highlight">
+    Introduction
+  </h3>
+  <p>
+    Hey there! Welcome to our music API, powered and made
+    possible by MusixMatch and Spotify Web API,
+    created by me, <a href="https://github.com/BlueG15/">@BlueG15</a>
+    in collaboration with <a href="https://github.com/The3dit0r">@The3dit0r.</a>
+
+    <br />
+    <br />
+
+    If you're a developer or a music lover looking to bring music into your app, you're in the right place! This API
+    combines the best of both worlds — MusixMatch for song lyrics,
+    and Spotify for albums metadata, track info,
+    and playlists.
+  </p>
+  <h3 class="highlight">Available endpoints</h3>
+  <table>
+    <tr>
+      <td class="mth get">GET</td>
+      <td class="endpoint"><a href="#get_track">/getTrack</a></td>
+      <td class="desc">Retrieve details for a track</td>
+    </tr>
+    <tr>
+      <td class="mth get">GET</td>
+      <td class="endpoint"><a href="#get_album">/getAlbum</a></td>
+      <td class="desc">Retrieve details for an album</td>
+    </tr>
+    <tr>
+      <td class="mth get">GET</td>
+      <td class="endpoint"><a href="#get_artist">/getArtist</a></td>
+      <td class="desc">Retrieve details for an artist</td>
+    </tr>
+    <tr>
+      <td class="mth get">GET</td>
+      <td class="endpoint"><a href="#get_playlist">/getPlaylist</a></td>
+      <td class="desc">Retrieve details for a playlist</td>
+    </tr>
+    <tr>
+      <td class="mth get">GET</td>
+      <td class="endpoint"><a href="#get_lyric">/getLyric</a></td>
+      <td class="desc">Get lyrics from a specific track</td>
+    </tr>
+  </table>
+
+
+  <footer>
+    Made with ❤️ by BlueG15
+  </footer>
+</div>
+</body>
+
+</html>
