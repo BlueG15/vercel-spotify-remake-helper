@@ -1,0 +1,286 @@
+html {
+  height: 100%;
+}
+
+/* Apply the font globally */
+body {
+  height: calc(100% - 64px);
+  padding: 24px 0;
+  margin: 0;
+
+  font-family: "JetBrains Mono", monospace;
+
+  /* light background color */
+  /* dark text color for readability */
+  color: #333;
+
+  overflow: hidden;
+}
+
+button {
+  font-family: inherit;
+  transition: all 0.1s;
+}
+
+/* Additional styles for clean design */
+h1,
+h2,
+h3 {
+  margin: 20px 0;
+  font-weight: 600;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2em;
+  font-weight: 800;
+}
+
+p {
+  margin: 10px 0;
+  line-height: 1.6;
+
+  text-align: justify;
+
+  width: 100%;
+  max-width: 900px;
+}
+
+p[center] {
+  text-align: center;
+}
+
+.mc {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+  height: 100%;
+  width: min(800px, calc(100% - 24px));
+  padding: 0 max(12px, calc(50% - 400px));
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.mc.shown {
+  transition: opacity 0.2s 0.2s;
+  opacity: 1;
+
+  pointer-events: all;
+}
+
+footer {
+  text-align: center;
+  margin-top: 120px;
+}
+
+table {
+  border: 2px solid #fff;
+  padding: 8px;
+  width: 100%;
+
+  .desc {
+    text-align: right;
+  }
+
+  tr {
+    line-height: 1.75;
+  }
+}
+
+body {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+/* Header Styling */
+h1,
+h2,
+h3 {
+  text-transform: uppercase;
+  /* Adds a bit of boldness for retro feel */
+  letter-spacing: 2px;
+  /* Adds some spacing for style */
+}
+
+/* Make the headers vibrant */
+h1 {
+  color: #ff1493;
+  /* Vibrant pink */
+}
+
+h2 {
+  color: #00ced1;
+  /* Turquoise/cyan */
+}
+
+h3 {
+  color: #f0e68c;
+  /* Soft yellow */
+}
+
+p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+/* Styling for links */
+a {
+  color: #00ced1;
+  /* Cyan for links */
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a:hover {
+  color: #ff1493;
+  /* Pink on hover */
+}
+
+/* Styling for buttons */
+button {
+  background-color: #f0e68c;
+  /* Soft yellow background */
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #ff1493;
+  /* Pink on hover */
+  color: white;
+}
+
+.highlight {
+  border-left: 8px solid;
+  padding-left: 16px;
+}
+
+.mth.get {
+  color: #ff69b4;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex.inline {
+  display: inline-flex;
+}
+
+.coll {
+  flex-direction: column;
+}
+
+.aiart {
+  align-items: flex-start;
+}
+
+.aiend {
+  align-items: flex-end;
+}
+
+.aictr {
+  align-items: center;
+}
+
+.jcart {
+  justify-content: flex-start;
+}
+
+.jcctr {
+  justify-content: center;
+}
+
+.jcend {
+  justify-content: flex-end;
+}
+
+.spbtw {
+  justify-content: space-between;
+}
+
+.spevl {
+  justify-content: space-evenly;
+}
+
+.spard {
+  justify-content: space-around;
+}
+
+.aiend {
+  align-items: flex-end;
+}
+
+.usn {
+  user-select: none;
+}
+
+.g10 {
+  gap: 10px;
+}
+
+.g5 {
+  gap: 5px;
+}
+
+.z-9 {
+  zoom: 0.9;
+}
+
+.g20 {
+  gap: 20px;
+}
+
+.brm {
+  border-radius: 6px;
+}
+
+.tac {
+  text-align: center;
+}
+
+.cap {
+  text-transform: capitalize;
+}
+
+.bold {
+  font-weight: 900;
+}
+
+.grid {
+  display: grid;
+
+  gap: 10px;
+}
+
+.p20 {
+  padding: 20px;
+}
+
+.p10 {
+  padding: 10px;
+}
+
+.hr {
+  width: 100%;
+  border: 1px solid #fff;
+
+  margin: 10px 5px;
+}
+
+.frame {
+  border: 2px solid #fff;
+  padding: 16px;
+}

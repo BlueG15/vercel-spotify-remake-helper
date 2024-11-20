@@ -1,88 +1,37 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-import getAccessToken from './utils/get_spotify_access_token';
-import * as axiosOriginal from "axios"
-const axios = axiosOriginal.default
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const getPlaylist = (token : string, playlistID : string, offset: number, limit: number) => new Promise((resolve, reject) => {
-    const options = {
-    method: 'GET',
-    url: 'https://api-partner.spotify.com/pathfinder/v1/query',
-    params: {
-        operationName: 'fetchPlaylist',
-        variables: `{"uri":"spotify:playlist:${playlistID}","offset":${offset},"limit":${limit}}`,
-        extensions: process.env.extensionStr3
-    },
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-    };
-
-    axios.request(options).then(function (response : any) {
-        resolve(response.data);
-    }).catch(function (error : any) {
-        resolve(undefined);
-    });
-}) as Promise<Object> | Promise<undefined>
-
-function getPropertyNameFromReqObject(req : VercelRequest, propertyName : string, defaultValue? : any){
-    let res : any = defaultValue
-    if (req.body && req.body[propertyName]) {
-        res = req.body[propertyName];
-    } else if (req.query[propertyName]) {
-        res = req.query[propertyName];
-    } else if (req.cookies[propertyName]) {
-        res = req.cookies[propertyName];
-    }
-    return res
-}
+import { Response, getPropertyNameFromReqObject } from "./utils";
+import { getPlaylist, getAccessToken } from "./utils/spotify";
 
 //max 9 seconds
-export default async function handler(req: VercelRequest, Vres: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const id = getPropertyNameFromReqObject(req, "id");
+  const offset: number = getPropertyNameFromReqObject(req, "offset", 0);
+  const limit: number = getPropertyNameFromReqObject(req, "limit", 15);
 
-    let playlistID = getPropertyNameFromReqObject(req, "playlistID");
-    let offset : number = getPropertyNameFromReqObject(req, "offset", 0);
-    let limit : number = getPropertyNameFromReqObject(req, "limit", 15);
+  const token = await getAccessToken();
 
-    let bearerData = await getAccessToken();
-    if(!bearerData) {
-        Vres.status(500).send(new response(true, "fail to fetches bearerToken", {}));
-        return;
-    }
-    let data = await getPlaylist(bearerData.accessToken, playlistID, offset, limit);
-    if(!data || data.errors){
-        Vres.status(400).send(new response(true, "fail to fetches playlist data with this ID", {playlistID : playlistID}))
-    }
-    Vres.status(200).send(new response(false, "successfully fetches playlist data", data));
-}
+  if (!token) {
+    const sendData = new Response(true, "Failed to fetch Bearer token", {});
+    return res.status(500).send(sendData);
+  }
 
-class response<T extends Object>  {
-    timeStamp: string
-    status : number
-    fail : boolean
-    note : string
-    data : T
-    constructor(fail : boolean, note : string, data? : T, _status? : number){
-        let time = new Date().toISOString()
-        switch(fail) {
-        case false : {
-                console.log(note)
-                this.fail = false
-                this.note = note
-                this.timeStamp = time
-                this.data = data ?? {} as T
-                this.status = _status ? _status : 200;
-                break
-            } 
-        default : {
-                this.fail = true
-                this.note = note
-                this.timeStamp = time
-                this.data = data ?? {} as T
-                this.status = _status ? _status : 400;
-            }  
-        }
+  try {
+    const { data } = await getPlaylist(token.accessToken, id, offset, limit);
+
+    if (data.playlistV2.__typename === "GenericError") {
+      throw new Error("Cannot find playlist with ID: " + id);
     }
-    fixAndAppendData(note: string){
-        this.note += " " + note;
-    }
+
+    const logStr = `[${id}] Successfully fetches playlist data`;
+    res.status(200).send(new Response(false, logStr, data));
+    // console.log(data);
+  } catch (err) {
+    const logStr = "Fail to fetches playlist data with ID: " + id;
+    const sendData = new Response(true, logStr, {
+      id: id,
+      error: err.message,
+    });
+    res.status(400).send(sendData);
+  }
 }

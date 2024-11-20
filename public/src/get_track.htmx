@@ -1,0 +1,18 @@
+<div class="mc" id="{cc}">
+  <h1>Endpoint - get Tracks</h1>
+  <div class="flex aictr spbtw">
+    <h3 class="highlight">Usage</h3>
+    <div> This endpoint is use to get track's information </div>
+  </div>
+
+
+  <h3 class="highlight">Path</h3>
+  <div class="frame">
+    http://localhost:3000/getTracks?id={track_id}
+  </div>
+
+  <h3 class="highlight">Return type</h3>
+  <div class="frame">
+    http://localhost:3000/getTracks?id={track_id}
+  </div>
+</div>

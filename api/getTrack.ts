@@ -1,86 +1,51 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-import getAccessToken from './utils/get_spotify_access_token';
-import * as axiosOriginal from "axios"
-const axios = axiosOriginal.default
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const getTrack = (token : string, trackID : string) => new Promise((resolve, reject) => {
-    const options = {
-    method: 'GET',
-    url: 'https://api-partner.spotify.com/pathfinder/v1/query',
-    params: {
-        operationName: 'getTrack',
-        variables: `{"uri":"spotify:track:${trackID}"}`,
-        extensions: process.env.extensionStr2
-    },
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-    };
-
-    axios.request(options).then(function (response : any) {
-        resolve(response.data);
-    }).catch(function (error : any) {
-        resolve(undefined);
-    });
-}) as Promise<Object> | Promise<undefined>
-
-function getPropertyNameFromReqObject(req : VercelRequest, propertyName : string, defaultValue? : any){
-    let res : any = defaultValue
-    if (req.body && req.body[propertyName]) {
-        res = req.body[propertyName];
-    } else if (req.query[propertyName]) {
-        res = req.query[propertyName];
-    } else if (req.cookies[propertyName]) {
-        res = req.cookies[propertyName];
-    }
-    return res
-}
+import { getPropertyNameFromReqObject, Response, cors } from "./utils";
+import { getAccessToken, getTrack } from "./utils/spotify";
+import { formatTrack } from "./utils/formatter";
 
 //max 9 seconds
-export default async function handler(req: VercelRequest, Vres: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const id = getPropertyNameFromReqObject(req, "id");
 
-    let trackID = getPropertyNameFromReqObject(req, "trackID");
+  req.on("close", () => {
+    console.log(`[${id}] Request canceled by client`);
+  });
 
-    let bearerData = await getAccessToken();
-    if(!bearerData) {
-        Vres.status(500).send(new response(true, "fail to fetches bearerToken", {}));
-        return;
-    }
-    let data = await getTrack(bearerData.accessToken, trackID);
-    if(!data || data.errors){
-        Vres.status(400).send(new response(true, "fail to fetches track data with this ID", {trackID : trackID}))
-    }
-    Vres.status(200).send(new response(false, "successfully fetches track data", data));
-}
+  const token = await getAccessToken();
+  if (!token) {
+    const sendData = new Response(true, "Failed to fetch Bearer token", {});
+    return res.status(500).send(sendData);
+  }
 
-class response<T extends Object>  {
-    timeStamp: string
-    status : number
-    fail : boolean
-    note : string
-    data : T
-    constructor(fail : boolean, note : string, data? : T, _status? : number){
-        let time = new Date().toISOString()
-        switch(fail) {
-        case false : {
-                console.log(note)
-                this.fail = false
-                this.note = note
-                this.timeStamp = time
-                this.data = data ?? {} as T
-                this.status = _status ? _status : 200;
-                break
-            } 
-        default : {
-                this.fail = true
-                this.note = note
-                this.timeStamp = time
-                this.data = data ?? {} as T
-                this.status = _status ? _status : 400;
-            }  
-        }
+  try {
+    if (req.closed) return;
+
+    const { data } = await getTrack(token.accessToken, id);
+
+    if (data.trackUnion?.__typename === "GenericError") {
+      throw new Error("Cannot find track with ID: " + id);
     }
-    fixAndAppendData(note: string){
-        this.note += " " + note;
-    }
+
+    const logStr = `[${id}] Successfully fetches track data`;
+
+    const formattedData = formatTrack(data.trackUnion);
+
+    //# Hande CORS
+    cors(res);
+
+    //# Allow caching upto 1 hour
+    res.setHeader("Cache-Control", "max-age=3600, public");
+    res.setHeader("vary", "Accept");
+
+    res.status(200).send(new Response(false, logStr, formattedData));
+    // console.log(data);
+  } catch (err) {
+    const logStr = "Fail to fetches track data with ID: " + id;
+    const sendData = new Response(true, logStr, {
+      id: id,
+      error: err.message,
+    });
+    res.status(400).send(sendData);
+  }
 }
