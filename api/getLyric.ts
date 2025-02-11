@@ -27,6 +27,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // # IDK what this is
     const logStr = `Successfully fetches lyrics with ISRC: ${isrc}`;
     const response = new Response(false, logStr, data);
+
+    // # Temporary fixed (hope so!!)
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
     res.send(response);
   } catch (error) {
     const logStr = `Failed to fetches song with ISRC: ${isrc}`;
